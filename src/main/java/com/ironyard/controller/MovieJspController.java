@@ -1,7 +1,7 @@
 package com.ironyard.controller;
 
+import com.ironyard.dto.Page;
 import com.ironyard.dto.Movie;
-import com.ironyard.dto.Results;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,22 +26,22 @@ public class MovieJspController {
 
 
         RestTemplate restTemplate = new RestTemplate();
-        Movie movies = restTemplate.getForObject("https://api.themoviedb.org/3/movie/now_playing?api_key=e0962a8ec3d01a8f03e49bdc15a344ad&language=en-US&page=1" , Movie.class);
+        Page movies = restTemplate.getForObject("https://api.themoviedb.org/3/movie/now_playing?api_key=e0962a8ec3d01a8f03e49bdc15a344ad&language=en-US&page=1" , Page.class);
 
 
-       List<Movie> foundList = Arrays.asList(movies);
-       List<Movie> filteredList = new ArrayList<>();
-        List<Results> res = new ArrayList<>();
+       List<Page> foundList = Arrays.asList(movies);
+       List<Page> filteredList = new ArrayList<>();
+        List<Movie> mine = new ArrayList<>();
         if (filters != null) {
             // filter the list
-            for (Results aResults : foundList.get(0).getResults()) {
-                if (aResults.getTitle().startsWith(filters)) {
-                    res.add(aResults);
+            for (Movie aMovie : foundList.get(0).getResults()) {
+                if (aMovie.getTitle().startsWith(filters)) {
+                    mine.add(aMovie);
                 }
 
             }
-            Movie mv = new Movie();
-            mv.setResults(res);
+            Page mv = new Page();
+            mv.setResults(mine);
             filteredList.add(mv);
         }
 
@@ -49,7 +49,7 @@ public class MovieJspController {
             filteredList = foundList;
         }
 
-        model.put("movies", filteredList);
+        model.put("movies", filteredList.get(0).getResults());
         return "movie_list";
 
 

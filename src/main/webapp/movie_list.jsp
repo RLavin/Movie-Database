@@ -21,14 +21,45 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
+<style>body {background-color: lightskyblue;}
+
+tr:hover {
+    background-color: #555;
+    color: white;
+}
+body {background-color: white  ;}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 45%;
+}
+
+td, th {
+    border: 2px solid #566573 ;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd ;
+}
+
+
+
+</style>
 <body>
-<table border="1" class="table">
-    <tr><th>Title</th><th>Date</th><th>Language</th></tr>
+<center><h2>Now Playing Movies</h2></center>
+<table border="3" class="table">
+    <tr><th>Title</th><th>Release Date</th><th>Description</th><th>Poster Cover</th></tr>
     <c:forEach items="${movies}" var="aMovie">
     <tr>
-        <td><c:out value="${aMovie.results}"/></td>
-        <td><c:out value="${aMovie.dates}"/></td>
-        <td><c:out value="${aMovie.page}"/></td>
+        <td><c:out value="${aMovie.title}"/></td>
+        <td><c:out value="${aMovie.release_date}"/></td>
+        <td><c:out value="${aMovie.overview}"/></td>
+        <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2<c:out value="${aMovie.poster_path}"/>"></td>
+
+
         </c:forEach>
 </table>
 </body>
